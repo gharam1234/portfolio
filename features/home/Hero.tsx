@@ -13,16 +13,16 @@ export default function Hero() {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-primary text-[10px] font-mono font-bold tracking-widest uppercase">Web Full stack // AI Architect</span>
+            <span className="text-primary text-[10px] font-mono font-bold tracking-widest uppercase">Full-stack // AI Product Engineer</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-sans font-extrabold leading-[1.1] mb-6">
-            AI Web Engineer<span className="text-primary">김가람</span>
+            문제를 기능으로 바꾸는<br /><span className="text-primary">개발자 김가람</span>
           </h1>
 
           <p className="text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed">
-            웹 부트캠프에서 다진 탄탄한 풀스택 구현 능력과 AI 부트캠프에서 익힌 모델링 역량을 결합해,
-            실질적인 가치를 만드는 AI 서비스를 개발합니다. 
+            사용자와 운영자의 문제를 듣고, 외부 데이터 연동·상태 관리·AI 기능을
+            실제로 사용할 수 있는 웹 서비스로 구현합니다.
           </p>
 
           <div className="flex flex-wrap gap-4">
@@ -59,8 +59,8 @@ export default function Hero() {
                 <Rocket size={20} />
               </div>
               <div>
-                <div className="text-xs font-bold">고속 최적화</div>
-                <div className="text-[10px] text-text-muted">Next.js 퍼포먼스 튜닝</div>
+                <div className="text-xs font-bold">근거 기반 개선</div>
+                <div className="text-[10px] text-text-muted">문제 발견 → 검증 → 회귀 테스트</div>
               </div>
             </motion.div>
           </div>

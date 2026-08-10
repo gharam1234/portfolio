@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { askRag, type ChatHistoryItem } from "@/lib/rag-langchain";
+import { askRag, type ChatHistoryItem } from "@/lib/rag-engine";
 
 export async function POST(request: Request) {
   try {

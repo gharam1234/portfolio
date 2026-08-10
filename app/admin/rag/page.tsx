@@ -21,11 +21,18 @@ export default function RagAdminPage() {
   const [status, setStatus] = useState("Loading context...");
   const [isBusy, setIsBusy] = useState(false);
 
+  const adminFetch = (url: string, init: RequestInit = {}) => {
+    const token = sessionStorage.getItem("synthetix-id-token") ?? "";
+    const headers = new Headers(init.headers);
+    if (token) headers.set("Authorization", `Bearer ${token}`);
+    return fetch(url, { ...init, headers });
+  };
+
   const loadContext = async () => {
     setIsBusy(true);
     setStatus("Loading context...");
     try {
-      const response = await fetch("/api/admin/rag-context", { cache: "no-store" });
+      const response = await adminFetch("/api/admin/rag-context", { cache: "no-store" });
       if (!response.ok) throw new Error(await response.text());
       const data = (await response.json()) as RagContextPayload;
       setKnowledge(data.knowledge);
@@ -39,6 +46,10 @@ export default function RagAdminPage() {
   };
 
   useEffect(() => {
+    if (!sessionStorage.getItem("synthetix-id-token")) {
+      window.location.href = "/login";
+      return;
+    }
     void loadContext();
   }, []);
 
@@ -50,7 +61,7 @@ export default function RagAdminPage() {
     setIsBusy(true);
     setStatus("Saving context...");
     try {
-      const response = await fetch("/api/admin/rag-context", {
+      const response = await adminFetch("/api/admin/rag-context", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ knowledge, pdfText }),
@@ -59,7 +70,7 @@ export default function RagAdminPage() {
       if (!response.ok) throw new Error(data.message ?? "Failed to save context.");
       setKnowledge(data.knowledge);
       setPdfText(data.pdfText);
-      setStatus(`Saved ${data.knowledge.length} items. Click Reindex to update Chroma.`);
+      setStatus(`Saved ${data.knowledge.length} items. Click Reindex to update Pinecone.`);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Failed to save context.");
     } finally {
@@ -69,16 +80,14 @@ export default function RagAdminPage() {
 
   const reindex = async () => {
     setIsBusy(true);
-    setStatus("Reindexing with Ollama + Chroma...");
+    setStatus("Reindexing with Gemini + Pinecone...");
     try {
-      const response = await fetch("/api/admin/rag-context/reindex", { method: "POST" });
+      const response = await adminFetch("/api/admin/rag-context/reindex", { method: "POST" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "Failed to reindex context.");
-      setStatus(`Reindexed ${data.indexedChunks} chunks into ${data.collection}.`);
+      setStatus(`Reindexed ${data.indexedChunks} chunks into ${data.index}/${data.namespace}.`);
     } catch (error) {
-      setStatus(
-        `${error instanceof Error ? error.message : "Failed to reindex context."} Check npm run rag:chroma and ollama serve.`,
-      );
+      setStatus(error instanceof Error ? error.message : "Failed to reindex context.");
     } finally {
       setIsBusy(false);
     }
@@ -96,8 +105,8 @@ export default function RagAdminPage() {
               <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">/_RAG_CONTEXT_ADMIN</p>
               <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">Context Editor</h1>
               <p className="mt-3 max-w-2xl text-on-surface-muted">
-                Edit the JSON facts and long-form document context used by the portfolio RAG assistant. Save writes
-                to <code className="text-primary">rag-data/</code>; Reindex pushes the latest content into Chroma.
+                Edit the facts and long-form document context used by the portfolio RAG assistant. Save writes
+                to <code className="text-primary">rag-data/</code>; Reindex pushes the latest content into Pinecone.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

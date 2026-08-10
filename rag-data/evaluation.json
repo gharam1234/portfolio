@@ -1,0 +1,8 @@
+[
+  { "question": "ApplyFlow는 어떤 문제를 해결하나요?", "expectedRefId": "applyflow-problem" },
+  { "question": "ApplyFlow가 지원하는 출처는 몇 개인가요?", "expectedRefId": "applyflow-features" },
+  { "question": "재택근무 오탐을 어떻게 개선했나요?", "expectedRefId": "applyflow-improvement" },
+  { "question": "Synthetix RAG의 검색 구조를 설명해 주세요.", "expectedRefId": "synthetix-architecture" },
+  { "question": "이 RAG를 LMS에 어떻게 적용할 수 있나요?", "expectedRefId": "synthetix-lms-extension" },
+  { "question": "교통봇에서 김가람이 맡은 역할은 무엇인가요?", "expectedRefId": "traffic-bot-role" }
+]

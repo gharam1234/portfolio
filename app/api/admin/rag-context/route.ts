@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { readRagContext, writeRagContext, type RagContextPayload } from "@/lib/rag-admin";
+import { verifyAdminRequest } from "@/lib/firebase-admin";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const access = await verifyAdminRequest(request);
+  if (access.ok === false) return NextResponse.json({ message: access.message }, { status: access.status });
   try {
     const context = await readRagContext();
     return NextResponse.json(context);
@@ -12,6 +15,8 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const access = await verifyAdminRequest(request);
+  if (access.ok === false) return NextResponse.json({ message: access.message }, { status: access.status });
   try {
     const payload = (await request.json()) as RagContextPayload;
     const context = await writeRagContext(undefined, payload);

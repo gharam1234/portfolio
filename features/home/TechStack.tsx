@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Brain, Database, Layout, Server, Zap } from "lucide-react";
+import { Brain, Layout, Server, Zap } from "lucide-react";
 
 const STACK = [
   { name: "프론트엔드 아키텍처", icon: <Layout />, items: ["React 19", "Next.js", "TypeScript", "Tailwind 4"] },
-  { name: "AI 시스템", icon: <Brain />, items: ["Gemini", "TensorFlow.js", "LangChain", "OpenAI", "Vector DBs"] },
-  { name: "백엔드 로직", icon: <Server />, items: ["Node.js", "Python", "GraphQL", "Express","FastAPI"] },
+  { name: "AI·검색 시스템", icon: <Brain />, items: ["Gemini", "Pinecone", "RAG", "Embeddings", "Retrieval Eval"] },
+  { name: "백엔드·데이터", icon: <Server />, items: ["Node.js", "Python", "FastAPI", "SQLite", "Firebase"] },
 ];
 
 export default function TechStack() {
@@ -18,9 +18,9 @@ export default function TechStack() {
             <h2 className="label-bento mb-4 flex items-center gap-2">
               <Zap size={14} /> /_TECH_CAPABILITIES
             </h2>
-            <h3 className="text-4xl md:text-5xl font-sans font-bold">기획부터 배포까지, AI 제품의 전체 스펙트럼을 설계합니다.</h3>
+            <h3 className="text-4xl md:text-5xl font-sans font-bold">사용자 흐름부터 데이터와 AI 기능까지 연결합니다.</h3>
           </div>
-          <p className="text-text-muted max-w-sm">타입 안정성과 모듈화를 기반으로 사용자 경험과 알고리즘 복잡도를 연결하는 구조를 만듭니다.</p>
+          <p className="text-text-muted max-w-sm">직접 사용해 본 기술만 남기고, 문제에 필요한 구조와 검증 방법을 함께 설명합니다.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

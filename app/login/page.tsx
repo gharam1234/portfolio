@@ -5,6 +5,7 @@ import { useState } from "react";
 interface LoginResult {
   ok?: boolean;
   user?: { name?: string; email?: string; role?: string };
+  token?: string;
   message?: string;
 }
 
@@ -35,7 +36,9 @@ export default function LoginPage() {
         return;
       }
 
+      if (data.token) sessionStorage.setItem("synthetix-id-token", data.token);
       setWelcome(`${data.user?.name ?? "User"}님 로그인 성공! (${data.user?.role ?? "user"})`);
+      if (data.user?.role === "admin") window.location.href = "/admin/rag";
     } catch {
       setError("네트워크 오류가 발생했어요.");
     } finally {

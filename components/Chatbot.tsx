@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 interface Message {
   role: "user" | "model";
   content: string;
+  sources?: Array<{ source: string; refId: string; preview: string }>;
 }
 
 export default function Chatbot() {
@@ -18,6 +19,7 @@ export default function Chatbot() {
     { role: "model", content: "안녕하세요! 포트폴리오, 프로젝트, 기술스택에 대해 무엇이든 물어보세요." },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -29,7 +31,7 @@ export default function Chatbot() {
   }, [messages, isTyping]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (isTyping || !input.trim()) return;
 
     const userMessage = input.trim();
     setInput("");
@@ -41,27 +43,44 @@ export default function Chatbot() {
       parts: [{ text: m.content }],
     }));
 
-    const response = await fetch("/api/rag", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        question: userMessage,
-        history,
-      }),
-    });
+    try {
+      const response = await fetch("/api/rag", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userMessage, history }),
+      });
+      const data = (await response.json()) as {
+        answer?: string;
+        message?: string;
+        contexts?: Array<{ source?: string; refId?: string; preview?: string }>;
+      };
+      if (!response.ok) throw new Error(data.message || "답변을 생성하지 못했습니다.");
 
-    const data = (await response.json()) as { answer?: string; message?: string };
-
-    setIsTyping(false);
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "model",
-        content: data.answer || data.message || "RAG 시스템이 오프라인입니다. Ollama/Chroma 상태를 확인해주세요.",
-      },
-    ]);
+      const sources = (data.contexts ?? [])
+        .filter((item) => item.source && item.preview)
+        .slice(0, 3)
+        .map((item) => ({ source: item.source!, refId: item.refId ?? "document", preview: item.preview! }));
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "model",
+          content: data.answer || "관련 문서에서 답을 찾지 못했습니다.",
+          sources,
+        },
+      ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "model",
+          content: error instanceof Error
+            ? `답변을 불러오지 못했습니다: ${error.message}`
+            : "답변을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -122,6 +141,19 @@ export default function Chatbot() {
                           <div className="markdown-body prose prose-invert prose-sm">
                             <ReactMarkdown>{m.content}</ReactMarkdown>
                           </div>
+                          {m.sources && m.sources.length > 0 && (
+                            <details className="mt-3 border-t border-border-subtle pt-2 text-[10px] text-text-muted">
+                              <summary className="cursor-pointer font-mono text-primary">사용한 문서 {m.sources.length}개</summary>
+                              <ul className="mt-2 space-y-2">
+                                {m.sources.map((source, sourceIndex) => (
+                                  <li key={`${source.source}-${sourceIndex}`}>
+                                    <strong className="block text-on-surface">[{source.source} · {source.refId}]</strong>
+                                    <span>{source.preview}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -149,11 +181,22 @@ export default function Chatbot() {
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                      onCompositionStart={() => setIsComposing(true)}
+                      onCompositionEnd={() => setIsComposing(false)}
+                      onKeyDown={(e) => {
+                        const nativeEvent = e.nativeEvent as KeyboardEvent & { isComposing?: boolean };
+                        const composing = isComposing || nativeEvent.isComposing || e.keyCode === 229;
+                        if (composing) return;
+
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          void handleSend();
+                        }
+                      }}
                       placeholder="프로젝트/기술/경험에 대해 질문해보세요"
                       className="w-full bg-surface-deep border border-border-subtle rounded px-4 py-2 pr-10 text-sm focus:outline-none focus:border-primary transition-colors"
                     />
-                    <button onClick={handleSend} disabled={!input.trim()} className="absolute right-2 top-1/2 -translate-y-1/2 text-primary disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button onClick={() => void handleSend()} disabled={isTyping || !input.trim()} className="absolute right-2 top-1/2 -translate-y-1/2 text-primary disabled:opacity-50 disabled:cursor-not-allowed">
                       <Send size={18} />
                     </button>
                   </div>

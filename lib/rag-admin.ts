@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { reindexRag } from "./rag-langchain";
+import { reindexRag } from "./rag-engine";
 
 export interface KnowledgeItem {
   id: string;

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { reindexRagContext } from "@/lib/rag-admin";
+import { verifyAdminRequest } from "@/lib/firebase-admin";
 
-export async function POST() {
+export async function POST(request: Request) {
+  const access = await verifyAdminRequest(request);
+  if (access.ok === false) return NextResponse.json({ message: access.message }, { status: access.status });
   try {
     const result = await reindexRagContext();
     return NextResponse.json({ ok: true, ...result });
