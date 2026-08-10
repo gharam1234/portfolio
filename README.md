@@ -1,5 +1,7 @@
 # Synthetix RAG Portfolio
 
+**Live Portfolio**: https://portfolio-gharams-projects.vercel.app
+
 포트폴리오와 프로젝트 문서를 검색해 근거 기반 답변을 제공하는 **RAG 지식지원 서비스**입니다. 방문자가 긴 문서를 직접 탐색하지 않아도 프로젝트의 문제·구현·역할·개선 결과를 질문으로 확인할 수 있게 만들었습니다.
 
 같은 구조를 LMS의 강의자료 질의응답, 학습 내용 복습, 운영자용 교육자료 검색 기능으로 확장할 수 있습니다.
