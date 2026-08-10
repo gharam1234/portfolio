@@ -1,20 +1,22 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Terminal, Github, Linkedin, Menu } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { Terminal, Github, Mail, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const GITHUB_URL = "https://github.com/gharam1234";
-const LINKEDIN_URL = "#contact";
+const CONTACT_URL = "#contact";
 
 const NAV_ITEMS = [
   { label: "소개", href: "#hero" },
   { label: "기술 스택", href: "#stack" },
   { label: "프로젝트", href: "#projects" },
-  { label: "활동", href: "#activity" },
   { label: "연락처", href: "#contact" },
 ];
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] h-16 glass border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
@@ -56,15 +58,21 @@ export default function Header() {
               <Github size={20} />
             </a>
             <a
-              href={LINKEDIN_URL}
+              href={CONTACT_URL}
               aria-label="연락처 섹션으로 이동"
               className="text-on-surface-variant hover:text-primary transition-colors"
             >
-              <Linkedin size={20} />
+              <Mail size={20} />
             </a>
           </div>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="md:hidden p-2 hover:bg-white/5 rounded-lg">
-            <Menu size={20} />
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsMenuOpen((current) => !current)}
+            aria-label={isMenuOpen ? "모바일 메뉴 닫기" : "모바일 메뉴 열기"}
+            aria-expanded={isMenuOpen}
+            className="md:hidden p-2 hover:bg-white/5 rounded-lg"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </motion.button>
           <motion.a
             href="#contact"
@@ -76,6 +84,29 @@ export default function Header() {
           </motion.a>
         </div>
       </div>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="md:hidden absolute top-16 inset-x-0 border-b border-border-subtle bg-surface-deep/95 px-6 py-4 backdrop-blur-md"
+          >
+            <div className="grid gap-2">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="rounded px-3 py-3 text-sm font-medium text-on-surface-variant hover:bg-white/5 hover:text-primary"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

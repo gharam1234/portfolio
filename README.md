@@ -71,6 +71,10 @@ rag-data/documents/*.md
 
 자료를 수정한 뒤 관리자 화면에서 재색인을 실행해야 Pinecone에 최신 벡터가 저장됩니다. 관리자 API는 Firebase 로그인과 `admin` 역할을 모두 확인합니다.
 
+```bash
+npm run rag:reindex
+```
+
 ## 검색 평가
 
 `rag-data/evaluation.json`에는 질문과 반드시 검색되어야 하는 문서 식별자를 저장합니다.

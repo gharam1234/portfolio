@@ -173,6 +173,7 @@ async function indexRagDocuments() {
   const vectors = await embedTexts(chunks.map((chunk) => chunk.pageContent));
   const index = getPineconeIndex();
 
+  await index.deleteAll();
   await index.upsert(
     chunks.map((chunk, i) => ({
       id: `${String(chunk.metadata.id ?? chunk.metadata.file ?? chunk.metadata.source ?? "doc")}-${String(chunk.metadata.chunk ?? i)}`,
@@ -220,8 +221,7 @@ function buildSearchQuery(question: string, history: ChatHistoryItem[] = []) {
   return `${historyText}\n${question}`.trim();
 }
 
-export async function askRag(question: string, history: ChatHistoryItem[] = []) {
-  const historyText = getHistoryText(history);
+export async function retrieveRagContexts(question: string, history: ChatHistoryItem[] = []) {
   const queryEmbedding = await embedText(buildSearchQuery(question, history));
   const index = getPineconeIndex();
   const result = await index.query({
@@ -230,13 +230,18 @@ export async function askRag(question: string, history: ChatHistoryItem[] = []) 
     includeMetadata: true,
   });
 
-  const contexts = (result.matches ?? [])
+  return (result.matches ?? [])
     .map((match) => ({
       source: String(match.metadata?.source ?? "unknown"),
       refId: String(match.metadata?.refId ?? "unknown"),
       pageContent: String(match.metadata?.text ?? ""),
     }))
     .filter((item) => item.pageContent.trim().length > 0);
+}
+
+export async function askRag(question: string, history: ChatHistoryItem[] = []) {
+  const historyText = getHistoryText(history);
+  const contexts = await retrieveRagContexts(question, history);
 
   if (contexts.length === 0) {
     return {

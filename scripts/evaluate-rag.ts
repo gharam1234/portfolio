@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { askRag } from "../lib/rag-engine.ts";
+import { retrieveRagContexts } from "../lib/rag-engine.ts";
 
 interface EvaluationCase {
   question: string;
@@ -13,8 +13,8 @@ const cases = JSON.parse(
 
 let passed = 0;
 for (const item of cases) {
-  const result = await askRag(item.question);
-  const retrieved = result.contexts.map((context) => context.refId);
+  const contexts = await retrieveRagContexts(item.question);
+  const retrieved = contexts.map((context) => context.refId);
   const ok = retrieved.includes(item.expectedRefId);
   if (ok) passed += 1;
   console.log(`${ok ? "PASS" : "FAIL"} ${item.question}`);

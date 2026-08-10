@@ -90,7 +90,8 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-surface-deep rounded-full shadow-lg flex items-center justify-center z-50 cursor-pointer"
+        aria-label="포트폴리오 AI 챗봇 열기"
+        className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 w-14 h-14 bg-primary text-surface-deep rounded-full shadow-lg flex items-center justify-center z-50 cursor-pointer"
       >
         <Bot size={28} />
       </motion.button>
@@ -105,10 +106,10 @@ export default function Chatbot() {
               y: 0,
               scale: 1,
               height: isMinimized ? "64px" : "500px",
-              width: "380px",
+              width: "min(380px, calc(100vw - 24px))",
             }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 glass rounded-lg overflow-hidden z-[500] flex flex-col"
+            className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 glass rounded-lg overflow-hidden z-[500] flex flex-col"
           >
             <div className="p-4 border-bottom border-border-subtle flex items-center justify-between bg-surface-container">
               <div className="flex items-center gap-3">
@@ -119,10 +120,10 @@ export default function Chatbot() {
                 <span className="font-sans font-semibold text-sm">Synthetix AI</span>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={() => setIsMinimized(!isMinimized)} className="p-1 hover:bg-white/10 rounded">
+                <button onClick={() => setIsMinimized(!isMinimized)} aria-label={isMinimized ? "챗봇 펼치기" : "챗봇 최소화"} className="p-1 hover:bg-white/10 rounded">
                   {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
                 </button>
-                <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-white/10 rounded">
+                <button onClick={() => setIsOpen(false)} aria-label="챗봇 닫기" className="p-1 hover:bg-white/10 rounded">
                   <X size={16} />
                 </button>
               </div>
@@ -196,7 +197,7 @@ export default function Chatbot() {
                       placeholder="프로젝트/기술/경험에 대해 질문해보세요"
                       className="w-full bg-surface-deep border border-border-subtle rounded px-4 py-2 pr-10 text-sm focus:outline-none focus:border-primary transition-colors"
                     />
-                    <button onClick={() => void handleSend()} disabled={isTyping || !input.trim()} className="absolute right-2 top-1/2 -translate-y-1/2 text-primary disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button onClick={() => void handleSend()} aria-label="질문 보내기" disabled={isTyping || !input.trim()} className="absolute right-2 top-1/2 -translate-y-1/2 text-primary disabled:opacity-50 disabled:cursor-not-allowed">
                       <Send size={18} />
                     </button>
                   </div>

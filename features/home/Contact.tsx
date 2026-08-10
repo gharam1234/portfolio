@@ -36,10 +36,10 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <h2 className="label-bento mb-4">/_CONNECT</h2>
             <h3 className="text-5xl font-sans font-extrabold mb-8 text-on-surface">
-              함께 만들면 더 <span className="text-secondary">빠르게 성장</span>합니다.
+              좋은 제품을 함께 만들 <span className="text-secondary">팀을 찾고 있습니다.</span>
             </h3>
             <p className="text-lg text-on-surface-variant mb-12 leading-relaxed max-w-md">
-              임팩트 있는 제품 개발, 기술 컨설팅, AI 기반 서비스 설계 협업을 환영합니다.
+              신입 개발 포지션과 웹서비스 개발, AI 기능 연동에 관한 연락을 기다립니다.
             </p>
 
             <div className="space-y-6">
@@ -60,7 +60,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="label-bento mb-0">근무 방식</div>
-                  <div className="font-sans font-bold">Remote / Global</div>
+                  <div className="font-sans font-bold">재택 · 하이브리드 가능</div>
                 </div>
               </div>
             </div>
@@ -85,16 +85,16 @@ export default function Contact() {
               <div className="space-y-2">
                 <label className="label-bento">문의 목적</label>
                 <select name="objective" className="w-full bg-surface-deep/50 border border-border-subtle rounded px-4 py-3 focus:outline-none focus:border-primary transition-colors hover:border-primary/50">
-                  <option>아키텍처 컨설팅</option>
-                  <option>풀스택 협업</option>
-                  <option>AI 모델 개발</option>
+                  <option>채용 문의</option>
+                  <option>풀스택 개발</option>
+                  <option>AI 기능 연동</option>
                   <option>프로젝트 문의</option>
                 </select>
               </div>
 
               <div className="space-y-2">
                 <label className="label-bento">메시지</label>
-                <textarea name="message" rows={4} placeholder="프로젝트 범위와 기술 요구사항을 알려주세요..." className="w-full bg-surface-deep/50 border border-border-subtle rounded px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none hover:border-primary/50" />
+                <textarea name="message" rows={4} placeholder="포지션이나 협업 내용을 알려주세요..." className="w-full bg-surface-deep/50 border border-border-subtle rounded px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none hover:border-primary/50" />
               </div>
 
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full py-4 bg-primary text-surface-deep font-bold rounded flex items-center justify-center gap-2 group">
@@ -108,7 +108,7 @@ export default function Contact() {
           <div className="font-mono text-[10px] text-text-muted">&copy; 2026 SYNTHETIX PORTFOLIO // ALL ENGINES OPERATIONAL</div>
           <div className="flex gap-8 font-mono text-[10px] text-text-muted">
             <a href={`mailto:${CONTACT_EMAIL}?subject=Privacy%20request`} className="hover:text-primary transition-colors">PRIVACY_01</a>
-            <a href="#activity" className="hover:text-primary transition-colors">SYSTEM_STATUS</a>
+            <a href="#projects" className="hover:text-primary transition-colors">PROJECTS</a>
             <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">SRC_CODE</a>
           </div>
         </footer>

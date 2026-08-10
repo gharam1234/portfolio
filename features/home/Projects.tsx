@@ -8,6 +8,7 @@ const PROJECTS = [
     id: "01",
     title: "ApplyFlow",
     category: "Data Pipeline / Full-stack",
+    meta: "개인 프로젝트 · 기획·수집·백엔드·UI 전 과정",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1400",
     description:
       "11개 채용·프로젝트 플랫폼의 데이터를 수집하고 공통 모델로 정규화해, 신입·재택·지원 가능 여부를 판단 근거와 함께 보여주는 운영형 웹 서비스입니다.",
@@ -25,6 +26,7 @@ const PROJECTS = [
     id: "02",
     title: "Synthetix RAG",
     category: "AI Knowledge Assistant",
+    meta: "개인 프로젝트 · RAG 파이프라인·관리 기능·프론트엔드",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1400",
     description:
       "포트폴리오 문서를 임베딩하고 관련 문맥을 검색해 근거 기반 답변을 생성하는 RAG 지식지원 서비스입니다. 같은 구조를 강의자료 질의응답과 학습 복습 지원으로 확장할 수 있습니다.",
@@ -42,6 +44,7 @@ const PROJECTS = [
     id: "03",
     title: "교통봇 : 음성 기반 대중교통 안내",
     category: "AI Voice / Public API",
+    meta: "팀 프로젝트 · TTS 및 API 서버 담당",
     image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&q=80&w=1400",
     description:
       "호출어 감지, 음성 인식, 버스 정보 조회, 음성 합성을 하나의 사용자 흐름으로 연결한 팀 프로젝트입니다. TTS와 API 서버 구성을 담당했습니다.",
@@ -59,6 +62,7 @@ const PROJECTS = [
     id: "04",
     title: "SAFE Meals",
     category: "Web / Full-stack",
+    meta: "팀 프로젝트 · 사용자 흐름 및 AI 결과 화면",
     image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&q=80&w=1400",
     description:
       "알레르기와 식이 제한 정보를 관리하고 메뉴 스캔 결과를 안전 단계로 안내하는 모바일 우선 웹 서비스 프로젝트입니다.",
@@ -117,21 +121,10 @@ export default function Projects() {
               <div className="p-7 flex-1 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                   <span className="label-bento mb-0">프로젝트 {project.id}</span>
-                  <div className="flex items-center gap-4 text-text-muted">
-                    {project.sourceUrl && (
-                      <a href={project.sourceUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} 소스 저장소`} className="hover:text-primary transition-colors">
-                        <Github size={17} />
-                      </a>
-                    )}
-                    {project.demoUrl && (
-                      <a href={project.demoUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} 데모`} className="hover:text-primary transition-colors">
-                        <ExternalLink size={17} />
-                      </a>
-                    )}
-                  </div>
                 </div>
 
                 <h3 className="text-2xl font-bold leading-tight">{project.title}</h3>
+                <p className="text-xs font-mono text-primary/90">{project.meta}</p>
                 <p className="text-sm text-on-surface-variant leading-relaxed">{project.description}</p>
 
                 <ul className="space-y-2 text-sm text-on-surface-variant">
@@ -148,6 +141,18 @@ export default function Projects() {
                   {project.tags.map((tag) => (
                     <span key={tag} className="text-[10px] font-mono px-2 py-1 bg-surface-deep border border-border-subtle rounded text-text-muted">#{tag}</span>
                   ))}
+                </div>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded bg-primary px-4 py-2 text-xs font-bold text-surface-deep hover:bg-primary/90">
+                      <ExternalLink size={15} /> 서비스 보기
+                    </a>
+                  )}
+                  {project.sourceUrl && (
+                    <a href={project.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded border border-border-subtle px-4 py-2 text-xs font-bold text-on-surface hover:border-primary hover:text-primary">
+                      <Github size={15} /> GitHub 코드
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.article>

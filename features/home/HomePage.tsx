@@ -1,6 +1,5 @@
 import Chatbot from "@/components/Chatbot";
 import Header from "@/components/Header";
-import BulletinBoard from "./BulletinBoard";
 import Contact from "./Contact";
 import Hero from "./Hero";
 import Projects from "./Projects";
@@ -14,7 +13,6 @@ export default function HomePage() {
         <Hero />
         <TechStack />
         <Projects />
-        <BulletinBoard />
         <Contact />
       </main>
       <Chatbot />
