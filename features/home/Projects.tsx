@@ -9,7 +9,7 @@ const PROJECTS = [
     title: "ApplyFlow",
     category: "Data Pipeline / Full-stack",
     meta: "개인 프로젝트 · 기획·수집·백엔드·UI 전 과정",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1400",
+    image: "/applyflow-demo.png",
     description:
       "11개 채용·프로젝트 플랫폼의 데이터를 수집하고 공통 모델로 정규화해, 신입·재택·지원 가능 여부를 판단 근거와 함께 보여주는 운영형 웹 서비스입니다.",
     highlights: [
@@ -17,7 +17,7 @@ const PROJECTS = [
       "조건 일치·확인 필요·제외 판정과 원본·변경 이력 저장",
       "페이지 공통 문구로 인한 재택 오탐을 공고별 근거 검증으로 개선",
     ],
-    outcome: "11개 외부 출처 연동 · 37개 자동 테스트",
+    outcome: "11개 외부 출처 연동 · 38개 자동 테스트",
     tags: ["Python", "FastAPI", "Pydantic", "SQLite", "httpx", "Pytest"],
     sourceUrl: "https://github.com/gharam1234/applyflow",
     demoUrl: "https://applyflow-sand-seven.vercel.app",
@@ -27,7 +27,7 @@ const PROJECTS = [
     title: "Synthetix RAG",
     category: "AI Knowledge Assistant",
     meta: "개인 프로젝트 · RAG 파이프라인·관리 기능·프론트엔드",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1400",
+    image: "/synthetix-rag-demo.png",
     description:
       "포트폴리오 문서를 임베딩하고 관련 문맥을 검색해 근거 기반 답변을 생성하는 RAG 지식지원 서비스입니다. 같은 구조를 강의자료 질의응답과 학습 복습 지원으로 확장할 수 있습니다.",
     highlights: [
