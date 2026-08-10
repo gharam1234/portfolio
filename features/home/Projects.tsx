@@ -18,8 +18,8 @@ const PROJECTS = [
     ],
     outcome: "11개 외부 출처 연동 · 37개 자동 테스트",
     tags: ["Python", "FastAPI", "Pydantic", "SQLite", "httpx", "Pytest"],
-    sourceUrl: "",
-    demoUrl: "",
+    sourceUrl: "https://github.com/gharam1234/applyflow",
+    demoUrl: "https://applyflow-sand-seven.vercel.app",
   },
   {
     id: "02",
@@ -36,7 +36,7 @@ const PROJECTS = [
     outcome: "근거 없는 질문은 정보 부족으로 안내 · 관리자 재색인 지원",
     tags: ["Next.js", "TypeScript", "Gemini", "Pinecone", "Firebase", "RAG"],
     sourceUrl: "https://github.com/gharam1234/portfolio",
-    demoUrl: "",
+    demoUrl: "https://portfolio-gharams-projects.vercel.app",
   },
   {
     id: "03",
